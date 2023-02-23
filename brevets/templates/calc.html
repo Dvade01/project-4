@@ -110,7 +110,7 @@
                <!-- col -->
             </div>
             <!-- row -->
-         </form>
+        </form>
          <script type="text/javascript">
             var SCRIPT_ROOT = {{ request.script_root|tojson|safe }} ;
             var TIME_CALC_URL = SCRIPT_ROOT + "/_calc_times";
@@ -123,8 +123,11 @@
               var km = control.find("input[name='km']").val();
               var open_time_field = control.find("input[name='open']");
               var close_time_field = control.find("input[name='close']");
-
-              $.getJSON(TIME_CALC_URL, {km: km}).done(
+	      // The additions to the Javascript below
+	      var brev_km_dist = $("#brevet_dist_km").val() // passing the brevet distance 
+              var brev_start_date = $("#begin_date").val()  // passing the brevet beginning place
+  
+              $.getJSON("_calc_times", {km: km, brev_km_dist: brev_km_dist, brev_start_date: brev_start_date}).done(
                 function(data) {
                    var times = data.result;
                    console.log("Got a response: ");
@@ -174,3 +177,4 @@
       </div>
    </body>
 </html>
+
